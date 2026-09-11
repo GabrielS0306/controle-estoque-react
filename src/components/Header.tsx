@@ -1,33 +1,71 @@
 ﻿type Page = "dashboard" | "movements";
+type Theme = "light" | "dark";
 
-type HeaderProps = { page: Page; onNavigate: (page: Page) => void };
+type HeaderProps = {
+  page: Page;
+  theme: Theme;
+  onNavigate: (page: Page) => void;
+  onToggleTheme: () => void;
+};
 
-export function Header({ page, onNavigate }: HeaderProps) {
+export function Header({
+  page,
+  theme,
+  onNavigate,
+  onToggleTheme,
+}: HeaderProps) {
   return (
-    <header className="topbar">
+    <aside className="sidebar">
       <button className="brand" onClick={() => onNavigate("dashboard")}>
-        <span className="brand-mark">E</span>Estoque<span>Pro</span>
+        <span className="brand-mark">E</span>
+        <span>
+          Estoque<span>Pro</span>
+        </span>
       </button>
       <nav className="nav" aria-label="Navegação principal">
+        <p>Menu principal</p>
         <button
           className={page === "dashboard" ? "active" : ""}
           onClick={() => onNavigate("dashboard")}
         >
-          Visão geral
+          <span>▦</span> Visão geral
         </button>
         <button
           className={page === "movements" ? "active" : ""}
           onClick={() => onNavigate("movements")}
         >
-          Movimentações
+          <span>↕</span> Movimentações
+        </button>
+        <button disabled>
+          <span>□</span> Relatórios <small>Em breve</small>
         </button>
       </nav>
-      <div className="header-actions">
-        <button className="bell" aria-label="Notificações">
-          ♧<i />
+      <div className="sidebar-footer">
+        <div className="support">
+          <span>?</span>
+          <div>
+            <b>Precisa de ajuda?</b>
+            <small>Acesse a central de suporte</small>
+          </div>
+        </div>
+        <button
+          className="theme-toggle"
+          onClick={onToggleTheme}
+          aria-label={`Ativar modo ${theme === "light" ? "escuro" : "claro"}`}
+        >
+          <span>{theme === "light" ? "☾" : "☀"}</span>
+          <span>Modo {theme === "light" ? "escuro" : "claro"}</span>
+          <i />
         </button>
-        <div className="avatar">GM</div>
+        <div className="profile">
+          <div className="avatar">GM</div>
+          <div>
+            <b>Gabriel Martins</b>
+            <small>Administrador</small>
+          </div>
+          <button aria-label="Mais opções">•••</button>
+        </div>
       </div>
-    </header>
+    </aside>
   );
 }

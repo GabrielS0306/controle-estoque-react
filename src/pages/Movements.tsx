@@ -2,6 +2,7 @@
 import type { Dispatch, FormEvent, SetStateAction } from "react";
 import type { Movement, MovementType } from "../types/movement";
 import type { Product } from "../types/product";
+import { api } from "../services/api";
 
 type Props = {
   products: Product[];
@@ -30,12 +31,26 @@ export function Movements({ products, setProducts }: Props) {
         : movements.filter((movement) => movement.type === filter),
     [movements, filter],
   );
-  const submit = (event: FormEvent) => {
+  const submit = async (event: FormEvent) => {
     event.preventDefault();
     const product = products.find((item) => item.id === Number(productId));
     if (!product || quantity < 1) return;
     if (type === "Saída" && quantity > product.stock) {
       alert("A saída não pode ser maior que o estoque disponível.");
+      return;
+    }
+    try {
+      await api.createMovement(product.id, {
+        type,
+        quantity,
+        note: note.trim() || undefined,
+      });
+    } catch (error) {
+      alert(
+        error instanceof Error
+          ? error.message
+          : "Erro ao registrar movimentação.",
+      );
       return;
     }
     const movement: Movement = {

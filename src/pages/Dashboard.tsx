@@ -2,6 +2,7 @@
 import type { Dispatch, FormEvent, SetStateAction } from "react";
 import { emptyProduct, formatCurrency } from "../data/products";
 import { Metrics } from "../components/Metrics";
+import { api } from "../services/api";
 import { ProductModal } from "../components/ProductModal";
 import { ProductsTable } from "../components/ProductsTable";
 import type { Product, ProductForm } from "../types/product";
@@ -55,20 +56,32 @@ export function Dashboard({ products, setProducts }: Props) {
     setForm(product);
     setModal(true);
   };
-  const save = (event: FormEvent) => {
+  const save = async (event: FormEvent) => {
     event.preventDefault();
-    if (editing)
+    try {
+      const product = editing
+        ? await api.updateProduct(editing, form)
+        : await api.createProduct(form);
       setProducts((list) =>
-        list.map((product) =>
-          product.id === editing ? { ...form, id: editing } : product,
-        ),
+        editing
+          ? list.map((item) => (item.id === editing ? product : item))
+          : [...list, product],
       );
-    else setProducts((list) => [...list, { ...form, id: Date.now() }]);
-    setModal(false);
+      setModal(false);
+    } catch (error) {
+      alert(error instanceof Error ? error.message : "Erro ao salvar produto.");
+    }
   };
-  const remove = (id: number) => {
-    if (confirm("Deseja excluir este produto?"))
+  const remove = async (id: number) => {
+    if (!confirm("Deseja excluir este produto?")) return;
+    try {
+      await api.deleteProduct(id);
       setProducts((list) => list.filter((product) => product.id !== id));
+    } catch (error) {
+      alert(
+        error instanceof Error ? error.message : "Erro ao excluir produto.",
+      );
+    }
   };
   return (
     <>
