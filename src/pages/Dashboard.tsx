@@ -1,32 +1,23 @@
-﻿import { useEffect, useMemo, useState } from "react";
-import type { FormEvent } from "react";
-import {
-  emptyProduct,
-  formatCurrency,
-  initialProducts,
-} from "../data/products";
-import { Header } from "../components/Header";
+﻿import { useMemo, useState } from "react";
+import type { Dispatch, FormEvent, SetStateAction } from "react";
+import { emptyProduct, formatCurrency } from "../data/products";
 import { Metrics } from "../components/Metrics";
 import { ProductModal } from "../components/ProductModal";
 import { ProductsTable } from "../components/ProductsTable";
 import type { Product, ProductForm } from "../types/product";
 
-export function Dashboard() {
-  const [products, setProducts] = useState<Product[]>(
-    () =>
-      JSON.parse(localStorage.getItem("estoque-pro") || "null") ||
-      initialProducts,
-  );
+type Props = {
+  products: Product[];
+  setProducts: Dispatch<SetStateAction<Product[]>>;
+};
+
+export function Dashboard({ products, setProducts }: Props) {
   const [search, setSearch] = useState("");
   const [category, setCategory] = useState("Todas");
   const [lowOnly, setLowOnly] = useState(false);
   const [form, setForm] = useState<ProductForm>(emptyProduct);
   const [editing, setEditing] = useState<number | null>(null);
   const [modal, setModal] = useState(false);
-  useEffect(
-    () => localStorage.setItem("estoque-pro", JSON.stringify(products)),
-    [products],
-  );
   const lowStock = products.filter(
     (product) => product.stock <= product.minimum,
   );
@@ -80,8 +71,7 @@ export function Dashboard() {
       setProducts((list) => list.filter((product) => product.id !== id));
   };
   return (
-    <main className="app-shell">
-      <Header />
+    <>
       <section className="hero" id="inicio">
         <div>
           <p className="eyebrow">Visão geral</p>
@@ -158,6 +148,6 @@ export function Dashboard() {
           onSubmit={save}
         />
       )}
-    </main>
+    </>
   );
 }
