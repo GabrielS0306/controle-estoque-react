@@ -5,6 +5,7 @@ import { Metrics } from "../components/Metrics";
 import { api } from "../services/api";
 import { ProductModal } from "../components/ProductModal";
 import { ProductsTable } from "../components/ProductsTable";
+import { LuCircleAlert, LuPlus, LuSearch } from "react-icons/lu";
 import type { Product, ProductForm } from "../types/product";
 
 type Props = {
@@ -94,7 +95,7 @@ export function Dashboard({ products, setProducts }: Props) {
           <p>Acompanhe seus produtos e mantenha seu estoque sempre em dia.</p>
         </div>
         <button className="primary" onClick={newProduct}>
-          ＋ Novo produto
+          <LuPlus aria-hidden="true" /> Novo produto
         </button>
       </section>
       <Metrics
@@ -115,7 +116,7 @@ export function Dashboard({ products, setProducts }: Props) {
         </div>
         <div className="filters">
           <label className="search">
-            ⌕
+            <LuSearch aria-hidden="true" />
             <input
               value={search}
               onChange={(event) => setSearch(event.target.value)}
@@ -140,7 +141,7 @@ export function Dashboard({ products, setProducts }: Props) {
       </section>
       {!!lowStock.length && (
         <aside className="alert">
-          <i>!</i>
+            <i><LuCircleAlert aria-hidden="true" /></i>
           <div>
             <b>Atenção ao estoque</b>
             <p>

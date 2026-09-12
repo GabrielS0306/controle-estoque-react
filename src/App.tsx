@@ -4,6 +4,7 @@ import { initialProducts } from "./data/products";
 import { api } from "./services/api";
 import { Dashboard } from "./pages/Dashboard";
 import { Movements } from "./pages/Movements";
+import { LuBell } from "react-icons/lu";
 import type { Product } from "./types/product";
 import "./App.css";
 
@@ -56,7 +57,8 @@ export default function App() {
             <span>11 de setembro de 2026</span>
           </div>
           <button className="notification" aria-label="Notificações">
-            ♧<i />
+            <LuBell aria-hidden="true" />
+            <i />
           </button>
         </div>
         {page === "dashboard" ? (

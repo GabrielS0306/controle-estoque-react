@@ -1,5 +1,5 @@
 ﻿type MetricProps = {
-  icon: string;
+  icon: ReactNode;
   tone: string;
   label: string;
   number: string | number;
@@ -36,28 +36,28 @@ export function Metrics({
   return (
     <section className="metrics">
       <Metric
-        icon="▣"
+        icon={<LuPackage aria-hidden="true" />}
         tone="blue"
         label="Produtos cadastrados"
         number={products}
         caption="+2 este mês"
       />
       <Metric
-        icon="▥"
+        icon={<LuBoxes aria-hidden="true" />}
         tone="purple"
         label="Unidades em estoque"
         number={units}
         caption="Em todos os produtos"
       />
       <Metric
-        icon="◒"
+        icon={<LuTriangleAlert aria-hidden="true" />}
         tone="orange"
         label="Estoque baixo"
         number={lowStock}
         caption={lowStock ? "Atenção necessária" : "Tudo em ordem"}
       />
       <Metric
-        icon="◇"
+        icon={<LuWalletCards aria-hidden="true" />}
         tone="green"
         label="Valor em estoque"
         number={totalValue}
@@ -66,3 +66,10 @@ export function Metrics({
     </section>
   );
 }
+import type { ReactNode } from "react";
+import {
+  LuTriangleAlert,
+  LuBoxes,
+  LuPackage,
+  LuWalletCards,
+} from "react-icons/lu";

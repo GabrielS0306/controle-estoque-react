@@ -1,4 +1,14 @@
-﻿type Page = "dashboard" | "movements";
+import {
+  LuArrowDownUp,
+  LuCircleHelp,
+  LuEllipsis,
+  LuFileText,
+  LuLayoutDashboard,
+  LuMoon,
+  LuSun,
+} from "react-icons/lu";
+
+type Page = "dashboard" | "movements";
 type Theme = "light" | "dark";
 
 type HeaderProps = {
@@ -28,21 +38,22 @@ export function Header({
           className={page === "dashboard" ? "active" : ""}
           onClick={() => onNavigate("dashboard")}
         >
-          <span>▦</span> Visão geral
+          <span><LuLayoutDashboard aria-hidden="true" /></span> Visão geral
         </button>
         <button
           className={page === "movements" ? "active" : ""}
           onClick={() => onNavigate("movements")}
         >
-          <span>↕</span> Movimentações
+          <span><LuArrowDownUp aria-hidden="true" /></span> Movimentações
         </button>
         <button disabled>
-          <span>□</span> Relatórios <small>Em breve</small>
+          <span><LuFileText aria-hidden="true" /></span> Relatórios{" "}
+          <small>Em breve</small>
         </button>
       </nav>
       <div className="sidebar-footer">
         <div className="support">
-          <span>?</span>
+          <span><LuCircleHelp aria-hidden="true" /></span>
           <div>
             <b>Precisa de ajuda?</b>
             <small>Acesse a central de suporte</small>
@@ -53,7 +64,13 @@ export function Header({
           onClick={onToggleTheme}
           aria-label={`Ativar modo ${theme === "light" ? "escuro" : "claro"}`}
         >
-          <span>{theme === "light" ? "☾" : "☀"}</span>
+          <span>
+            {theme === "light" ? (
+              <LuMoon aria-hidden="true" />
+            ) : (
+              <LuSun aria-hidden="true" />
+            )}
+          </span>
           <span>Modo {theme === "light" ? "escuro" : "claro"}</span>
           <i />
         </button>
@@ -63,7 +80,9 @@ export function Header({
             <b>Gabriel Martins</b>
             <small>Administrador</small>
           </div>
-          <button aria-label="Mais opções">•••</button>
+          <button aria-label="Mais opções">
+            <LuEllipsis aria-hidden="true" />
+          </button>
         </div>
       </div>
     </aside>

@@ -1,4 +1,5 @@
 ﻿import type { FormEvent } from "react";
+import { LuX } from "react-icons/lu";
 import type { ProductForm } from "../types/product";
 
 type Props = {
@@ -27,8 +28,8 @@ export function ProductModal({
             <p className="eyebrow">Catálogo</p>
             <h2>{editing ? "Editar produto" : "Novo produto"}</h2>
           </div>
-          <button type="button" onClick={onClose}>
-            ×
+          <button type="button" onClick={onClose} aria-label="Fechar modal">
+            <LuX aria-hidden="true" />
           </button>
         </div>
         <div className="form">

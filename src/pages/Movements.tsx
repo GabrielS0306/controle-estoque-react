@@ -3,6 +3,7 @@ import type { Dispatch, FormEvent, SetStateAction } from "react";
 import type { Movement, MovementType } from "../types/movement";
 import type { Product } from "../types/product";
 import { api } from "../services/api";
+import { LuArrowDownToLine, LuArrowUpFromLine, LuList } from "react-icons/lu";
 
 type Props = {
   products: Product[];
@@ -98,21 +99,21 @@ export function Movements({ products, setProducts }: Props) {
       </section>
       <section className="movement-summary">
         <article>
-          <span className="movement-icon entry">↓</span>
+          <span className="movement-icon entry"><LuArrowDownToLine aria-hidden="true" /></span>
           <div>
             <p>Entradas registradas</p>
             <strong>{entries} un.</strong>
           </div>
         </article>
         <article>
-          <span className="movement-icon exit">↑</span>
+          <span className="movement-icon exit"><LuArrowUpFromLine aria-hidden="true" /></span>
           <div>
             <p>Saídas registradas</p>
             <strong>{exits} un.</strong>
           </div>
         </article>
         <article>
-          <span className="movement-icon neutral">≡</span>
+          <span className="movement-icon neutral"><LuList aria-hidden="true" /></span>
           <div>
             <p>Movimentações</p>
             <strong>{movements.length}</strong>
@@ -207,7 +208,11 @@ export function Movements({ products, setProducts }: Props) {
                   <span
                     className={`movement-icon ${movement.type === "Entrada" ? "entry" : "exit"}`}
                   >
-                    {movement.type === "Entrada" ? "↓" : "↑"}
+                    {movement.type === "Entrada" ? (
+                      <LuArrowDownToLine aria-hidden="true" />
+                    ) : (
+                      <LuArrowUpFromLine aria-hidden="true" />
+                    )}
                   </span>
                   <div>
                     <b>{movement.productName}</b>

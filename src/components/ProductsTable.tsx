@@ -1,5 +1,6 @@
 ﻿import type { Product } from "../types/product";
 import { formatCurrency } from "../data/products";
+import { LuChevronLeft, LuChevronRight, LuPencil, LuTrash2 } from "react-icons/lu";
 
 type Props = {
   products: Product[];
@@ -51,13 +52,13 @@ export function ProductsTable({ products, total, onEdit, onRemove }: Props) {
                       onClick={() => onEdit(product)}
                       aria-label={`Editar ${product.name}`}
                     >
-                      ✎
+                      <LuPencil aria-hidden="true" />
                     </button>
                     <button
                       onClick={() => onRemove(product.id)}
                       aria-label={`Excluir ${product.name}`}
                     >
-                      ⌫
+                      <LuTrash2 aria-hidden="true" />
                     </button>
                   </td>
                 </tr>
@@ -72,7 +73,8 @@ export function ProductsTable({ products, total, onEdit, onRemove }: Props) {
       <footer>
         Exibindo <b>{products.length}</b> de <b>{total}</b> produtos{" "}
         <span>
-          ‹ &nbsp; <b>1</b> &nbsp; ›
+          <LuChevronLeft aria-hidden="true" /> <b>1</b>{" "}
+          <LuChevronRight aria-hidden="true" />
         </span>
       </footer>
     </>
